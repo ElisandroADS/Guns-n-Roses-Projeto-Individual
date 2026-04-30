@@ -10,6 +10,7 @@ header
     align-items: flex-start;
     width: 100%;
     background-color: black;
+    
 }
 .navbar{
     display: flex;
@@ -24,7 +25,15 @@ header
 .tituloNav
 {
 display: flex;
-margin-left: 550px;
+margin-left: 500px;
+gap: 10px;
+}
+
+.loginCadastro
+{
+display: flex;
+flex-direction: row;
+padding-left: 330px;
 gap: 10px;
 }
 

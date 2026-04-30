@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="cadastroGNR.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a style="color: inherit;" href="gunsnroses.html"><img width="100px"
+                        src="https://logosmarcas.net/wp-content/uploads/2020/04/Guns-N-Roses-Logo-650x366.png"
+                        alt=""></a>
+            </div>
+            <div class="tituloNav">
+                <p style="color: red;"><a style="color: inherit;" href="gunsnroses.html">Home </a></p>
+                <p style="color: red;">sobre a Banda </p>
+                <p style="color: red;">Escolher Favoritos</p>
+            </div>
+        </nav>
+    </header>
+
+    <div class="card">
+        <h2 style="color: white;">Cadastro</h3>
+            <p style="color: white;">Nome do usuário</p>
+            <input placeholder="Seu Nome" type="text" id="inputNome">
+            <p style="color: white;">senha</p>
+            <input type="password" placeholder="Senha" type="text" id="inputSenha">
+            <p style="color: white;">E-mail</p>
+            <input placeholder="E-mail" type="text" id="inputEmail">
+            <p style="color: white;">Ano que conheceu Guns</p>
+            <input placeholder="Ano que conheceu o Guns n' Roses" type="text" id="inputAno_conheceu"><br>
+            <button onclick="cadastrar()" class="botaoCadastro">Welcome to the Jungle</button>
+    </div>
+</body>
+
+</html>
+
+<script>
+// variaveis globais para armazenar valor
+let senhaCadastrada = []
+let emailCadastrado = []
+
+    function cadastrar() {
+        let senha = inputSenha.value
+        let email = inputEmail.value
+        let posicaoArroba = email.indexOf('@')
+        let posicaoCom = email.indexOf('.com')
+        
+
+
+        // verifica a senha e com o que tá nos requisistos
+        if (senha !== '' && senha.length >= 8 && senha !== senha.toUpperCase() && senha !== senha.toLowerCase() &&
+        (senha.includes('!') || senha.includes('@') || senha.includes('#') ||
+     senha.includes('$') || senha.includes('%') || senha.includes('&') || senha.includes('_'))
+    ) {
+    // coloca como se não existisse
+    let existeSenha = false;
+    
+    // percorre a lista
+    for (let contador = 0; contador < senhaCadastrada.length; i++) {
+        // se tem é pq existe 
+        if (senhaCadastrada[contador] == senha) {
+            // muda pra true e quebra laço com break
+            existeSenha = true;
+            break; 
+        }
+    }
+
+    // dps do for caso tenha passado  ileso adiciona na lista com push
+    if (existeSenha) {
+        alert('Senha já existe!')
+    } else {
+        senhaCadastrada.push(senha)
+        alert('Senha é válida e foi cadastrada!')
+    }
+}
+else{alert('Senha inválida')}
+
+
+
+
+
+
+
+
+// verifica se E-mail é válido para fazer cadastro de acordo com os requisistos
+if (email != '' && email.includes('@')
+&& email.includes('.com') && posicaoArroba < posicaoCom && email.endsWith('.com'))
+{
+    // email como não existe
+    let existeEmail = false
+    
+    // percorre a lista
+    for(let contador = 0; contador <= emailCadastrado.length; contador++)
+    {
+        // se for igual em algum momemto é pq existe
+        if(emailCadastrado[contador] == email)
+        {
+            //muda pra existe dá alerta e dá break que quebra o laço 
+            existeEmail = true
+            alert('Email já existe')
+            break
+        }
+    }
+    
+    //após acabar o for vai pro if onde se caso fez toda lista e não está cadastrado, adiciona na lista com push
+    if(existeEmail == false)
+    {
+        emailCadastrado.push(email)
+        alert('E-mail cadastrado!')
+    }
+    
+    
+    
+}
+else(alert('E-mail inválido'))
+
+}
+
+/*
+
+let senhaExiste = false;
+for (let i = 0; i < senhaCadastrada.length; i++) {
+    if (senhaCadastrada[i] === senha) {
+        senhaExiste = true;
+        break;
+    }
+}
+
+if (!senhaExiste) {
+    senhaCadastrada.push(senha);
+    alert('Senha cadastrada com sucesso!');
+} else {
+    alert('Senha já existe!');
+}
+
+        
+*/
+
+
+
+
+
+
+
+
+
+/* // verifica se senha está válida para fazer cadastro de acordo com os requisistos
+    if (senha != ''  && senha.length >= 8 && senha != senha.toUpperCase() && senha != senha.toLowerCase() && (
+        senha.includes('!') || senha.includes('@') || senha.includes('#') || senha.includes('$') || senha.includes('%')
+        || senha.includes('&') || senha.includes('_'))) 
+        {
+        for (let i = 0; i < senhaCadastrada.length; i++) {
+        if (senhaCadastrada[i] == senha) {
+        alert('Senha já existe!')
+        break;
+        }
+        else{senhaCadastrada.push(senha)
+            alert('Senha é Válida')}
+
+        }
+} 
+*/
+    
+// if else pra verificar se é valida 
+    //dps um for pra percorrer lista e se não existir adicionar na lista 
+    
+    
+    // ou colocar esse alerta ou ir direto pra próxima página alert('Cadastro feito com sucesso!')
+    /*
+    lógica com for e vetor
+    if !include
+    faz cadastro
+    push na lista
+    else já existe
+    */
+
+    /*colocar pra verificar se tem mais de 8 caracteres e etc, pegar oq fizemos noi trabalho em grupo*/
+
+    // deixar senha e confirmação de senha com ****
+    // vetor/lista consigo colocar no BD pelos indices
+
+
+
+    /*
+    if (senha.length >= 8 && senha != '' && senha != senha.toUpperCase() && senha != senha.toLowerCase() &&
+    senha.includes('!') || senha.includes('@') || senha.includes('#') || senha.includes('$') || senha.includes('%') || senha.includes('&') || senha.includes('_')) {
+        alert('Senha válida')
+        }
+        else{alert('Senha inválida')}
+        
+        //verificação e-mail
+        if(email != '' && email.includes('@') && email.includes('.com') && posicaoArroba < posicaoCom && email.endsWith('.com'))
+        {alert('E-mail válido')}
+        else{alert('E-mail inválido')}
+        */
+
+    /*
+    /if(!senhaCadastrada.includes(senha) && !emailCadastrado.includes(email) 
+    && senha != '' && email != '' && senha.length >= 8 && senha != senha.toUpperCase() && senha != senha.toLowerCase() &&
+    senha.includes('!') || senha.includes('@') || senha.includes('#') || senha.includes('$') || senha.includes('%') 
+    || senha.includes('&') || senha.includes('_') && email != '' && email.includes('@') && email.includes('.com') && posicaoArroba < posicaoCom && email.endsWith('.com'))
+    {
+    */
+</script>

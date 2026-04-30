@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="loginGNR.css">
+</head>
+<body>
+     <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a style="color: inherit;" href="gunsnroses.html"><img width="100px" src="https://logosmarcas.net/wp-content/uploads/2020/04/Guns-N-Roses-Logo-650x366.png" alt=""></a>  
+            </div>
+            <div class="tituloNav">
+                 <p style="color: red;"><a style="color: inherit;" href="gunsnroses.html">Home </a></p>
+                <p style="color: red;">sobre a Banda </p>
+                <p style="color: red;">Escolher Favoritos</p>
+            </div>
+        </nav>
+    </header>
+
+     <div class="card">
+        <h2 style="color: white;">Login</h3>
+        <p style="color: white;">senha</p>
+        <input placeholder="Senha" type="text" id="inputSenha">
+        <p style="color: white;">E-mail</p>
+        <input placeholder="E-mail" type="text" id="inputEmail"><br>
+       
+        <button onclick="logar()" class="botaoLogin">You gonna die!!!</button>
+    </div>
+</body>
+</html>
+<script>
+    function logar()
+    {
+        let email_digitado = inputEmail.value
+        let senha_digitada = inputSenha.value 
+        let senhaCadastrada = ['Guns12345678@'] 
+        let emailCadastrado = ['gunner@gmail.com']
+        let emailCorreto = false
+        let senhaCorreta = false
+
+        // percorre e verifica se é igual ou não
+        for(let contador = 0; contador <= emailCadastrado.length; contador++)
+    {
+        if(email_digitado != emailCadastrado)
+    {
+        alert('E-mail incorreto!')
+        break
+    }
+    // se é coloca como verdadeiro
+    else{emailCorreto = true}
+    }
+
+    // percorre e verifica se é igual ou não
+    for(let contador = 0; contador <= senhaCadastrada.length; contador++)
+    {
+        if(senha_digitada != senhaCadastrada)
+    {
+        alert('Senha incorreta!')
+        break
+    }
+    // se é coloca como verdadeiro
+    else{senhaCorreta = true}
+    }
+      
+    if(emailCorreto == true && senhaCorreta == true)
+    {
+        alert('Seja Bem-Vindo!!!')
+    }
+
+    }
+</script>
