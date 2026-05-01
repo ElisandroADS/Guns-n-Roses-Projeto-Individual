@@ -29,11 +29,9 @@
             <p style="color: white;">Nome do usuário</p>
             <input placeholder="Seu Nome" type="text" id="inputNome">
             <p style="color: white;">senha</p>
-            <input type="password" placeholder="Senha" type="text" id="inputSenha">
+            <input  placeholder="Senha" type="password" id="inputSenha">
             <p style="color: white;">E-mail</p>
-            <input placeholder="E-mail" type="text" id="inputEmail">
-            <p style="color: white;">Ano que conheceu Guns</p>
-            <input placeholder="Ano que conheceu o Guns n' Roses" type="text" id="inputAno_conheceu"><br>
+            <input placeholder="E-mail" type="text" id="inputEmail"><br>
             <button onclick="cadastrar()" class="botaoCadastro">Welcome to the Jungle</button>
     </div>
 </body>
@@ -45,82 +43,115 @@
 let senhaCadastrada = []
 let emailCadastrado = []
 
-    function cadastrar() {
-        let senha = inputSenha.value
-        let email = inputEmail.value
-        let posicaoArroba = email.indexOf('@')
-        let posicaoCom = email.indexOf('.com')
-        
-
-
-        // verifica a senha e com o que tá nos requisistos
-        if (senha !== '' && senha.length >= 8 && senha !== senha.toUpperCase() && senha !== senha.toLowerCase() &&
-        (senha.includes('!') || senha.includes('@') || senha.includes('#') ||
-     senha.includes('$') || senha.includes('%') || senha.includes('&') || senha.includes('_'))
-    ) {
-    // coloca como se não existisse
-    let existeSenha = false;
-    
-    // percorre a lista
-    for (let contador = 0; contador < senhaCadastrada.length; i++) {
-        // se tem é pq existe 
-        if (senhaCadastrada[contador] == senha) {
-            // muda pra true e quebra laço com break
-            existeSenha = true;
-            break; 
-        }
-    }
-
-    // dps do for caso tenha passado  ileso adiciona na lista com push
-    if (existeSenha) {
-        alert('Senha já existe!')
-    } else {
-        senhaCadastrada.push(senha)
-        alert('Senha é válida e foi cadastrada!')
-    }
+function validaSenha(senha){
+    return (senha !== '' && senha.length >= 8 && senha !== senha.toUpperCase() && senha !== senha.toLowerCase() &&
+    (senha.includes('!') || senha.includes('@') || senha.includes('#') || senha.includes('$') || senha.includes('%') || senha.includes('&') || senha.includes('_'))
+)
 }
-else{alert('Senha inválida')}
+function validaEmail(email){
+    let posicaoArroba = email.indexOf('@')
+    let posicaoCom = email.indexOf('.com')
+    return (email != '' && email.includes('@')
+    && email.includes('.com') && posicaoArroba < posicaoCom && email.endsWith('.com'))
+}
 
+function cadastrar() {
+    let nome = inputNome.value
+    let senha = inputSenha.value
+    let email = inputEmail.value
+    
 
-
-
-
-
-
-
-// verifica se E-mail é válido para fazer cadastro de acordo com os requisistos
-if (email != '' && email.includes('@')
-&& email.includes('.com') && posicaoArroba < posicaoCom && email.endsWith('.com'))
-{
-    // email como não existe
+    let senhaValida = false
+    let emailValido = false
     let existeEmail = false
-    
-    // percorre a lista
-    for(let contador = 0; contador <= emailCadastrado.length; contador++)
-    {
-        // se for igual em algum momemto é pq existe
-        if(emailCadastrado[contador] == email)
+    // verifica a senha e com o que tá nos requisistos
+    if (validaSenha(senha)){  
+        senhaCadastrada.push(senha)
+        senhaValida = true
+    }
+    else{alert('Senha inválida')}
+
+    // verifica se E-mail é válido para fazer cadastro de acordo com os requisistos
+    if (validaEmail(email))
+    {       
+        // percorre a lista
+        for(let contador = 0; contador < emailCadastrado.length; contador++)
         {
-            //muda pra existe dá alerta e dá break que quebra o laço 
-            existeEmail = true
-            alert('Email já existe')
-            break
+            // se for igual em algum momemto é pq existe
+            if(emailCadastrado[contador] == email)
+            {
+                //muda pra existe dá alerta e dá break que quebra o laço 
+                 existeEmail = true
+                alert('Email já existe')
+                break
+            }
+        }    
+        //após acabar o for vai pro if onde se caso fez toda lista e não está cadastrado, adiciona na lista com push
+        if(existeEmail == false)
+        {
+            emailCadastrado.push(email)
+            emailValido = true
         }
+          
     }
-    
-    //após acabar o for vai pro if onde se caso fez toda lista e não está cadastrado, adiciona na lista com push
-    if(existeEmail == false)
+    else(alert('E-mail inválido'))
+
+    if(senhaValida == true && emailValido == true)
     {
-        emailCadastrado.push(email)
-        alert('E-mail cadastrado!')
+
+    // Enviando o valor da nova input
+        fetch("http://localhost:8080/usuarios/cadastrar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            // crie um atributo que recebe o valor recuperado aqui
+            // Agora vá para o arquivo routes/usuario.js
+            nomeServer: nome,
+            emailServer: email,
+            senhaServer: senha
+        }),
+        })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+
+            alert('Cadastro realizado com sucesso! Redirecionando para tela de Login...')
+            
+
+            setTimeout(() => {
+                window.location = "loginGNR.html";
+            }, 2000);
+
+            
+            } else {
+            throw "Houve um erro ao tentar realizar o cadastro!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+            
+        });
+
+        return false;
+
+
+
     }
     
-    
-    
-}
-else(alert('E-mail inválido'))
+
+
 
 }
+
+
+
+
+
+
+
 
 /*
 
