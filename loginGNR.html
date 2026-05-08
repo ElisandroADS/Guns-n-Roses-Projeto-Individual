@@ -56,11 +56,19 @@
 
                 if (resposta.ok) {
 
+                resposta.json().then(json => {
+                console.log(json);
+                
+                // Aqui você deve usar o nome exato do campo que o seu backend devolve
+                // Geralmente é json.id ou json.idUsuario
+                sessionStorage.setItem("ID_USUARIO", json.id); 
+               })
+                    
                 alert('Login realizado com sucesso! Redirecionando para tela de Formulário...')
                 
 
                 setTimeout(() => {
-                    window.location = "gunsnroses.html";
+                    window.location = "formulario.html";
                 }, 2000);
 
                 

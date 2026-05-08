@@ -1,0 +1,79 @@
+body
+{
+    background-color: #2e2e2e;
+}
+
+header
+{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    background-color: black;
+}
+.navbar{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+.tituloNav
+{
+display: flex;
+margin-left: 510px;
+gap: 10px;
+}
+
+.logo
+{
+    display: flex;
+    flex-direction: row;
+    justify-self: flex-start;
+    align-self: flex-start;
+}
+
+.tituloFav
+{
+    display: flex;
+    margin-left: 630px;
+    text-align: center;
+    display: flex;
+    font-size: 30px;
+}
+
+.linha{
+  border: none;            
+  height: 2px;             
+  background-color: red;  
+}
+
+.album_escolha
+{
+    display: flex;
+    margin-left: 650px;
+    text-align: center;
+    display: flex;
+    font-size: 20px;
+}
+
+.botao_enviarForm
+{
+    display: flex;
+    border-radius: 6%;
+    padding: 20px;
+    margin-left: 660px;
+    margin-top: 300px;
+    size: 300px;
+    
+ 
+
+}
+button:hover
+{
+    background-color: yellow;
+    color: black;
+    transform: scale(1.2);
+}
