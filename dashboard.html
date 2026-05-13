@@ -22,9 +22,9 @@
     </header>
 
     <div class="KPIs">
-        <div class="kpiVotadoGeral"><p><b>Álbum Mais Votado Geral:</b> <br >Appetite for Destruction</p></div>
-        <div class="kpiVotadoMasc"><p><b>Álbum Preferido Masculino:</b> <br >Appetite for Destruction</p></div>
-        <div class="kpiVotadoFemin"><p><b>Álbum Preferido Feminino :</b> <br >Appetite for Destruction</p></div>
+        <div id="kpiVotadoGeral" class="kpiVotadoGeral"><p><b>Álbum Mais Votado Geral:</b> <br ></p></div>
+        <div id="kpiVotadoMasc" class="kpiVotadoMasc"><p><b>Álbum Preferido Masculino:</b> <br ></p></div>
+        <div id="kpiVotadoFemin" class="kpiVotadoFemin"><p><b>Álbum Preferido Feminino :</b> <br ></p></div>
     </div>
 
     <div class="dashboards">
@@ -40,6 +40,8 @@
             <canvas id="barraSexo"></canvas>
         </div>
     </div>
+
+    <button onclick="atualizarKPI()">Atualizar Gráfico</button>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
@@ -81,7 +83,7 @@ new Chart(ctxLinha, {
     }
 });
 
-// VOTAÇÃO POR SEXO
+
 const ctxBarra = document.getElementById('barraSexo').getContext('2d');
 new Chart(ctxBarra, {
     type: 'bar',
@@ -90,13 +92,18 @@ new Chart(ctxBarra, {
         datasets: [
             {
                 label: 'Público Masculino',
-                data: [15, 6, 10, 9, 4, 2],
+                data: [15, 6, 10, 9, 0, 2],
                 backgroundColor: '#003366'
             },
             {
                 label: 'Público Feminino',
-                data: [15, 4, 8, 9, 2, 1],
+                data: [15, 4, 8, 9, 0, 1],
                 backgroundColor: '#FF007F' 
+            },
+            {
+                label: 'Sexo Outros',
+                data: [5, 4, 3, 5, 0, 2],
+                backgroundColor: '#898989' 
             }
         ]
     },
@@ -110,5 +117,35 @@ new Chart(ctxBarra, {
         }
     }
 });
+
+
+function atualizarKPI()
+{
+    fetch("http://localhost:8080/kpi/kpiGeral").then(function (resposta) {
+             resposta.json().then(json => {
+                document.getElementById('kpiVotadoGeral').innerHTML = `<p><b>Álbum Mais Votado Geral:</b> <br >${json[0].nome}</p>`;
+                
+               })
+
+         
+        })
+    fetch("http://localhost:8080/kpi/kpiSexoFem").then(function (resposta) {
+             resposta.json().then(json => {
+                document.getElementById('kpiVotadoMasc').innerHTML = `<p><b>Álbum Preferido Masculino:</b> <br >${json[0].nome}</p>`;
+                
+               })
+
+         
+        })
+    fetch("http://localhost:8080/kpi/kpiSexoMasc").then(function (resposta) {
+             resposta.json().then(json => {
+                document.getElementById('kpiVotadoFemin').innerHTML = `<p><b>Álbum Preferido Feminino :</b> <br >${json[0].nome}</p>`;
+                
+               })
+
+         
+        })
+}
+
 
 </script>
