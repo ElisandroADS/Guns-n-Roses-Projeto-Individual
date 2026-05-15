@@ -12,10 +12,10 @@
         <link rel="stylesheet" href="dashboard.css">
         <nav class="navbar">
             <div class="logo">
-              <a style="color: inherit;" href="gunsnroses.html"><img width="100px" src="https://logosmarcas.net/wp-content/uploads/2020/04/Guns-N-Roses-Logo-650x366.png" alt=""></a>  
+              <a style="color: inherit;" href="index.html"><img width="100px" src="https://logosmarcas.net/wp-content/uploads/2020/04/Guns-N-Roses-Logo-650x366.png" alt=""></a>  
             </div>
             <div class="tituloNav">
-                <p style="color: red;"><a style="color: inherit;" href="gunsnroses.html">Voltar á Home </a></p>
+                <p style="color: red;"><a style="color: inherit;" href="index.html">Voltar á Home </a></p>
             </div>
             
         </nav>
@@ -40,9 +40,10 @@
             <canvas id="barraSexo"></canvas>
         </div>
     </div>
-
-    <button onclick="atualizarKPI()">Atualizar Gráfico</button>
-
+    
+    
+    <button onclick="mostrarGrafico()">mostrarGrafico</button>
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
@@ -50,6 +51,42 @@
 
 <script>
 
+window.onload = 
+
+function carregar()
+{
+    atualizarKPI()
+    mostrarGraficos()
+}
+
+//Retorna dados do grafico geral em json objeto
+async function getGraficoGeralJson()
+{
+    try{
+        let respostaGeral = await fetch("/dashboard/graficoGeral")
+        let dados = await respostaGeral.json()
+        return dados
+    }
+    catch(erro){
+        alert("Erro ao buscar dados!")
+        console.log(erro) //vai mostrar noconsole o tipo de erro
+    }
+}
+
+async function getGraficoSexoJson()
+{
+    try{
+        let respostaSexo = await fetch("/dashboard/graficoSexo")
+        let dados = await respostaSexo.json()
+        return dados
+    }
+    catch(erro){
+        alert("Erro ao buscar dados!")
+        console.log(erro)
+    }
+}
+
+// lista de albuns para usar nos gráficos teste
 const Albuns = [
     'Appetite for Destruction', 
     'G N\' R Lies', 
@@ -59,50 +96,93 @@ const Albuns = [
     'Chinese Democracy'
 ];
 
+// mostra os dois graficos
+async function mostrarGraficos(){
+    let dadosGeral = await getGraficoGeralJson()
+    let albunsGraficoGeral = []
+    let votos = []
+    
+    console.log(dadosGeral)
+    for(let i = 0; i < dadosGeral.length; i++)
+    {
+        albunsGraficoGeral.push(dadosGeral[i].nome)
+        votos.push(dadosGeral[i].votos)
+    
 
-const ctxLinha = document.getElementById('linhaGeral').getContext('2d');
-new Chart(ctxLinha, {
-    type: 'line',
-    data: {
-        labels: Albuns,
-        datasets: [{
-            label: 'Popularidade Geral ',
-            data: [30, 10, 18, 18, 6, 3], 
-            borderColor: '#f1c40f', 
-            backgroundColor: 'rgba(241, 196, 15, 0.2)',
-            borderWidth: 3,
-            fill: true,
-            tension: 0.4
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { labels: { color: '#333' } }
-        }
     }
-});
+
+    let dadosSexo =  await getGraficoSexoJson()
+    let albuns = []
+    let votosMasculinos = []
+    let votosFemininos = []
+    let votosOutros = []
+   
+    for(let i = 0; i < dadosSexo.length; i++)
+    {
+
+        if(dadosSexo[i].sexo == 'M')
+       {
+           albuns.push(dadosSexo[i].nome)
+           votosMasculinos.push(dadosSexo[i].votos)
+       }
+           else if(dadosSexo[i].sexo == 'F')
+       {
+           albuns.push(dadosSexo[i].nome)
+           votosFemininos.push(dadosSexo[i].votos)
+       }
+           else if(dadosSexo[i].sexo == 'Outros')
+       {   
+           albuns.push(dadosSexo[i].nome)
+           votosOutros.push(dadosSexo[i].votos)
+       }
+    }
 
 
-const ctxBarra = document.getElementById('barraSexo').getContext('2d');
-new Chart(ctxBarra, {
+    console.log(albunsGraficoGeral, votos)
+    console.log( votosMasculinos, votosFemininos, votosOutros )
+
+    const ctxLinha = document.getElementById('linhaGeral').getContext('2d');
+    new Chart(ctxLinha, {
+        type: 'line',
+        data: {
+            labels: albunsGraficoGeral,
+            datasets: [{
+                label: 'Popularidade Geral ',
+                data: votos, 
+                borderColor: '#f1c40f', 
+                backgroundColor: 'rgba(241, 196, 15, 0.2)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { labels: { color: '#333' } }
+            }
+        }
+    });
+   
+    const ctxBarra = document.getElementById('barraSexo').getContext('2d');
+    new Chart(ctxBarra, {
     type: 'bar',
     data: {
-        labels: Albuns,
+        labels: albuns,
         datasets: [
             {
                 label: 'Público Masculino',
-                data: [15, 6, 10, 9, 0, 2],
+                data: votosMasculinos,
                 backgroundColor: '#003366'
             },
             {
                 label: 'Público Feminino',
-                data: [15, 4, 8, 9, 0, 1],
+                data: votosFemininos,
                 backgroundColor: '#FF007F' 
             },
             {
                 label: 'Sexo Outros',
-                data: [5, 4, 3, 5, 0, 2],
+                data: votosOutros,
                 backgroundColor: '#898989' 
             }
         ]
@@ -116,7 +196,8 @@ new Chart(ctxBarra, {
             }
         }
     }
-});
+    });
+}
 
 
 function atualizarKPI()
