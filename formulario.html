@@ -12,12 +12,12 @@
     <header>
         <nav class="navbar">
             <div class="logo">
-                <a style="color: inherit;" href="gunsnroses.html"><img width="100px"
+                <a style="color: inherit;" href="index.html"><img width="100px"
                         src="https://logosmarcas.net/wp-content/uploads/2020/04/Guns-N-Roses-Logo-650x366.png"
                         alt=""></a>
             </div>
             <div class="tituloNav">
-                <p style="color: red;"><a style="color: inherit;" href="gunsnroses.html">Home </a></p>
+                <p style="color: red;"><a style="color: inherit;" href="index.html">Home </a></p>
                 <p style="color: red;">sobre a Banda </p>
                 <p style="color: red;">Escolher Favoritos</p>
             </div>
@@ -29,21 +29,25 @@
     </div>
     <hr class="linha">
 
-    
-    <select id="select_album" class="album_escolha">
-        <option value="1">Appetite for Destruction</option>
-        <option value="2">Gn'R Lies</option>
-        <option value="3">Use Your Illusion I</option>
-        <option value="4">Use Your Illusion II</option>
-        <option value="5">The Spaghetti Incident</option>
-        <option value="6">Chinese Democracy</option>
-    </select>
+    <div class="formulario">
 
-    <select id="select_sexo" class="album_escolha">
-        <option value="M">Masculino</option>
-        <option value="F">Feminino</option>
-        <option value="Outros">Outros</option>
-    </select>
+        <select id="select_album" class="album_escolha">
+            <option value="1">Appetite for Destruction</option>
+            <option value="2">Gn'R Lies</option>
+            <option value="3">Use Your Illusion I</option>
+            <option value="4">Use Your Illusion II</option>
+            <option value="5">The Spaghetti Incident</option>
+            <option value="6">Chinese Democracy</option>
+        </select>
+    <br/>
+        <select id="select_sexo" class="album_escolha">
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+            <option value="Outros">Outros</option>
+        </select>
+    <br/>
+        <input placeholder="E-mail" type="text" id="input_email">
+    </div>
 
     <button onclick="enviarForm()" class="botao_enviarForm"><span style="font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">TAKE ME DOWN TO PARADISE CITY</span> </button>
 
@@ -55,10 +59,11 @@
 <script>
 function enviarForm()
 {
-    //let fk_usuario = sessionStorage.getItem("ID_USUARIO");
+    //let fk_usuario = sessionStorage.getItem("ID_USUARIO", id);
     let fk_album = select_album.value
     let sexo = select_sexo.value
-    console.log( 'Album: ', fk_album)
+    let email = input_email.value
+
   
     
     fetch("http://localhost:8080/formulario/enviar", {
@@ -71,7 +76,8 @@ function enviarForm()
              // Agora vá para o arquivo routes/usuario.js
              //fkUsuarioServer: fk_usuario ,
              fkAlbumServer: fk_album,
-             sexoServer: sexo
+             sexoServer: sexo,
+             emailServer: email
          }),
          })
          .then(function (resposta) {

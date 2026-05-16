@@ -63,7 +63,7 @@ function carregar()
 async function getGraficoGeralJson()
 {
     try{
-        let respostaGeral = await fetch("/dashboard/graficoGeral")
+        let respostaGeral = await fetch("http://localhost:8080/dashboard/graficoGeral")
         let dados = await respostaGeral.json()
         return dados
     }
@@ -76,7 +76,7 @@ async function getGraficoGeralJson()
 async function getGraficoSexoJson()
 {
     try{
-        let respostaSexo = await fetch("/dashboard/graficoSexo")
+        let respostaSexo = await fetch("http://localhost:8080/dashboard/graficoSexo")
         let dados = await respostaSexo.json()
         return dados
     }
@@ -88,12 +88,12 @@ async function getGraficoSexoJson()
 
 // lista de albuns para usar nos gráficos teste
 const Albuns = [
-    'Appetite for Destruction', 
-    'G N\' R Lies', 
-    'Use Your Illusion I', 
-    'Use Your Illusion II', 
-    'The Spaghetti Incident?', 
-    'Chinese Democracy'
+    'appetite_for_destruction', 
+    'gnr_lies', 
+    'use_your_illusion_1', 
+    'use_your_illusion_2', 
+    'the_spaghetti_incident', 
+    'chinese_democracy'
 ];
 
 // mostra os dois graficos
@@ -111,35 +111,10 @@ async function mostrarGraficos(){
 
     }
 
-    let dadosSexo =  await getGraficoSexoJson()
-    let albuns = []
-    let votosMasculinos = []
-    let votosFemininos = []
-    let votosOutros = []
-   
-    for(let i = 0; i < dadosSexo.length; i++)
-    {
-
-        if(dadosSexo[i].sexo == 'M')
-       {
-           albuns.push(dadosSexo[i].nome)
-           votosMasculinos.push(dadosSexo[i].votos)
-       }
-           else if(dadosSexo[i].sexo == 'F')
-       {
-           albuns.push(dadosSexo[i].nome)
-           votosFemininos.push(dadosSexo[i].votos)
-       }
-           else if(dadosSexo[i].sexo == 'Outros')
-       {   
-           albuns.push(dadosSexo[i].nome)
-           votosOutros.push(dadosSexo[i].votos)
-       }
-    }
+    
 
 
-    console.log(albunsGraficoGeral, votos)
-    console.log( votosMasculinos, votosFemininos, votosOutros )
+    
 
     const ctxLinha = document.getElementById('linhaGeral').getContext('2d');
     new Chart(ctxLinha, {
@@ -163,6 +138,24 @@ async function mostrarGraficos(){
             }
         }
     });
+
+
+    let dadosSexo =  await getGraficoSexoJson()
+    let albuns = []
+    let votosMasculinos = []
+    let votosFemininos = []
+    let votosOutros = []
+   
+    for(let i = 0; i < dadosSexo.length; i++)
+    {
+        albuns.push(dadosSexo[i].nome)
+        votosMasculinos.push(dadosSexo[i].votosM)
+        votosFemininos.push(dadosSexo[i].votosF)
+        votosOutros.push(dadosSexo[i].votosOutros)
+       
+       
+    }
+
    
     const ctxBarra = document.getElementById('barraSexo').getContext('2d');
     new Chart(ctxBarra, {
@@ -210,7 +203,7 @@ function atualizarKPI()
 
          
         })
-    fetch("http://localhost:8080/kpi/kpiSexoFem").then(function (resposta) {
+    fetch("http://localhost:8080/kpi/kpiSexoMasc").then(function (resposta) {
              resposta.json().then(json => {
                 document.getElementById('kpiVotadoMasc').innerHTML = `<p><b>Álbum Preferido Masculino:</b> <br >${json[0].nome}</p>`;
                 
@@ -218,7 +211,7 @@ function atualizarKPI()
 
          
         })
-    fetch("http://localhost:8080/kpi/kpiSexoMasc").then(function (resposta) {
+    fetch("http://localhost:8080/kpi/kpiSexoFem").then(function (resposta) {
              resposta.json().then(json => {
                 document.getElementById('kpiVotadoFemin').innerHTML = `<p><b>Álbum Preferido Feminino :</b> <br >${json[0].nome}</p>`;
                 
