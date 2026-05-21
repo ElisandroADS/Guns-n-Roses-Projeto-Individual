@@ -23,7 +23,7 @@ header
 .tituloNav
 {
 display: flex;
-margin-left: 580px;
+margin-left: 560px;
 gap: 10px;
 }
 
@@ -50,38 +50,21 @@ gap: 10px;
   background-color: red;  
 }
 
-.album_escolha
-{
+.textoCal{
     display: flex;
-    text-align: center;
-    display: flex;
+    flex-direction: row;
     font-size: 20px;
 }
-
-.botao_enviarForm
-{
+.calculadora{
     display: flex;
-    border-radius: 6%;
-    padding: 20px;
-    size: 300px;
-    margin-left: 670px;
-    margin-top: 300px;
-
-    
- 
-
-}
-button:hover
-{
-    background-color: yellow;
-    color: black;
-    transform: scale(1.2);
-}
-
-.formulario
-{
-    display: flex;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
-    gap: 20px   ;
+    align-self: center;
+}
+
+.resposta{
+    display: flex;
+    margin-left: 550px;
+    margin-top: 200px;
+    font-size: 25px;
 }

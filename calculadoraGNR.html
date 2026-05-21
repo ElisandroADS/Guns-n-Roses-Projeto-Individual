@@ -1,0 +1,61 @@
+!<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="calculadoraGNR.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a style="color: inherit;" href="index.html"><img width="100px"
+                        src="https://logosmarcas.net/wp-content/uploads/2020/04/Guns-N-Roses-Logo-650x366.png"
+                        alt=""></a>
+            </div>
+            <div class="tituloNav">
+                <p style="color: red;"><a style="color: inherit;" href="index.html">Home </a></p>
+                <p style="color: red;"><a style="color: inherit;" href="sobreBanda.html">sobre a Banda</a></p>
+                
+                
+            </div>
+        </nav>
+    </header>
+
+    <div class="tituloFav" >
+       <p style="color: white;">Calculadora Guns n' Roses</p>
+    </div>
+    <hr class="linha">
+
+    <div class="calculadora">
+    <h3 class="textoCal" style="color: white;">Em que ano conheceu o Guns n' Roses:</h3>
+    <input type="text" id="input_ano"><br><br>
+    <button onclick="calcular()">Calcular</button>
+    </div>
+    <div class="resposta" style="color: white;" id="div_mensagem"></div>
+    
+</body>
+
+</html>
+
+<script>
+
+function calcular(){
+
+    let anoDigitado = Number(input_ano.value)
+    let calculoDescoberta = anoDigitado - 1985
+
+    if(anoDigitado < 1985 || anoDigitado > 2026){
+        alert("Digite um ano válido entre 1985 e o ano atual")
+    }
+    else{
+        div_mensagem.innerHTML = `Quando Você conheceu a banda já tinha ${calculoDescoberta} anos`
+    }
+
+
+}
+
+</script>

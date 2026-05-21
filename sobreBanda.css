@@ -26,6 +26,7 @@ header
 .tituloNav
 {
 display: flex;
+text-align: center;
 margin-left: 550px;
 gap: 10px;
 }
